@@ -1,7 +1,11 @@
 # ARMv7 C/C++ Toolchain for MiSTer FPGA
 
-This (hopefully) gives you a frictionless development environment with everything you need to compile code written in **C/C++** for **MiSTer** (DE10-Nano) or any other device with an ARMv7 architecture using Docker to natively compile without having to deal with cross-compilation.
-Some additional packages are installed to satisfy build requirements. This image compressed comes to **271.48 MB**, but with its base layers the total on disk is **1.1GB**.
+This (hopefully) gives you a frictionless development environment with everything you need to compile
+code written in **C/C++** targeting the **MiSTer** (DE10-Nano) or any other device with an ARMv7 architecture
+using Docker to run Arm containers on x86/64 platforms without the hassle of dealing with cross-compilation
+or waste countless hours rewriting or adapting `Makefile`.
+
+> This image compressed comes to **271.48 MB**, but with its base layers the total on disk is **1.1GB**.
 
 ## Terasic DE10-Nano <abbr title="Hard Processor System">HPS</abbr> Information
 
@@ -16,11 +20,19 @@ Some additional packages are installed to satisfy build requirements. This image
 | **Memory** | 1GB DDR3 SDRAM (32-bit data bus) |
 | **GCC Optimization Flags** | `-mcpu=cortex-a9 -mfloat-abi=hard -mtune=cortex-a9 -mfpu=neon` *(alias for `neon-vfpv3`)* |
 
-## Running Arm Containers with Docker on a PC/Mac with Intel CPU
+> The variable CFLAGS `-mcpu=cortex-a9 -mfloat-abi=hard -mtune=cortex-a9 -mfpu=neon` is already set-up in the environment.
 
-As soon as we try to start an Arm-based container on a x86/x64 platform you'll get an error message `exec user process caused "exec format error"`, which means that the image tried to start a binary/executable which can’t be run on the current platform.
+## Using the Docker Engine to run Arm containers on PC/Mac with an Intel CPU
 
-For that we need to run the magic command to enable Arm/Arm64 on Intel
+As soon as you try to start an Arm-based container on a x86/x64 platform you'll get an error message:
+
+```bash
+exec user process caused "exec format error"
+```
+
+Which means that the image tried to start a binary/executable which can’t be run on the current platform.
+
+For that we need to run the **magic** command to enable **Arm** and **Arm64** containers to work
 
 ```bash
 docker run --rm --privileged hypriot/qemu-register
@@ -28,67 +40,58 @@ docker run --rm --privileged hypriot/qemu-register
 
 ![Shia Labeouf Magic](https://media.giphy.com/media/12NUbkX6p4xOO4/giphy.gif)
 
-This will registers a few Qemu emulators and instruct the loader to start the specific emulator to run the binary/executable if it’s not Intel based.
-
-
-## What's in the Box?
-
-**Packages**
-
-```
-autoconf automake bash-completion bison build-essential ca-certificates checkinstall cmake
-curl flex gdb git iputils-ping less libc-dev libcurl4-openssl-dev libelf-dev libfreetype6-dev
-libgmp3-dev libjsoncpp-dev liblz4-tool libmpc-dev libmpfr-dev libncurses5-dev
-libpcap-dev libreadline-dev libssl-dev libtcmalloc-minimal4 libtool libtool-bin
-libusb-dev libusb-1.0-0-dev locales mlocate nano nasm openssh-client p7zip python3-pip
-pkg-config software-properties-common sshpass sudo tcl texinfo tree unzip wget
-xz-utils zlib1g-dev
-```
-
-**From the Source **
-
-```
-CMake: 3.16.2
-Boost C++ Libraries: 1.72.0
-```
+BOOM! And just like that a few Qemu emulators will be registered and instruct the loader to start the specific emulator to run the binary/executable if you try to run an Arm based container.
 
 ## How to use this image
 
 ### Linux/Mac Terminal
 
-```
+```bash
 docker run -it --rm -v $(pwd):/mister misterkun/toolchain /bin/bash
 ```
+
 ### Windows
 
 Windows Command Line (`cmd`)
-```
+
+```cmd
 docker run -it --rm -v %cd%:/mister misterkun/toolchain /bin/bash
 ```
+
 Windows PowerShell, `${pwd}` also works on Debian/Ubuntu
-```
+
+```powershell
 docker run -it --rm -v ${pwd}:/mister misterkun/toolchain /bin/bash
 ```
+
 Where:
 - `docker run` spins up the container from the image
 - `-it` specifies that you want an interactive TTY
 - `--rm` tells it to remove this temporary image when it exits
 - `-v <cmd>` mounts a volume on the current directory and `:/mister` makes a project directory within the container mapped to it
-- `misterkun/toolchain` is our Docker Image
-- `/bin/bash` to log into the container. Alternatively you can also issue a command without having to login into the container, eg. `make` , `git`...
+- `misterkun/toolchain` is our Docker Image and
+- `/bin/bash` to log into the container.
 
 You will be dropped inside to the container with access to your files where you can `make` or do whatever you feel compelled to do at that point. :)
+
+> Alternatively you can also issue a command without having to log into the container, eg.:
+>
+> ```bash
+> docker run -it --rm -v ${pwd}:/mister misterkun/toolchain make
+> ```
 
 #### Shared Drive on Windows
 
 If you encounter this error:
-```
+
+```text
 C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: Drive has not been shared.
 See 'C:\Program Files\Docker\Docker\Resources\bin\docker.exe run --help'.
 ```
-Open your Docker's settings and add the drive you're attempting to share under "Shared Drives".
 
-### Tips
+Open your Docker's settings and add the drive you're attempting to share/mount inside the container under "Shared Drives".
+
+### Life Hack
 
 Add an `alias` to your profile:
 
@@ -110,10 +113,9 @@ From now on you can simply type `mtc` to log into the container on the current f
 
 ## Example
 
-**Compiling Main_MiSTer**
+Compiling Main_MiSTer
 
-> 1. **git** is already installed inside the container so if you don't have installed on your computer you don't need to worry about it.
-> 2. You can safely ignore the notes/warning thrown by the compiler in this example
+> **git** is already installed inside the container so if you don't have installed on your computer you don't need to worry about it.
 
 ### Inside the Container
 
@@ -201,6 +203,8 @@ cfg.h             file_io.cpp      ini_parser.cpp         main.cpp          osd.
 
 ```
 
+> You can safely ignore the notes/warning thrown by the compiler in this example
+
 ### From outside of the container
 
 In this example will clone the repository using the `git` inside the container and `make` without logging into the container
@@ -218,6 +222,75 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 - [Cortex-A9 NEON - Technical Reference Manual](https://static.docs.arm.com/ddi0409/i/DDI0409I_cortex_a9_neon_mpe_r4p1_trm.pdf)
 - [Demystifying ARM Floating Point Compiler Options](https://embeddedartistry.com/blog/2017/10/11/demystifying-arm-floating-point-compiler-options/)
 - [Understanding the Six PowerShell Profiles](https://devblogs.microsoft.com/scripting/understanding-the-six-powershell-profiles/)
+
+## What's in the Box
+
+![What's in the Box](https://media.giphy.com/media/3otPoPkqjANWVH4SUE/giphy.gif)
+
+### From Source/Release
+
+| Package               | Version |
+| --------------------- | ------- |
+| CMake                 | 3.16.2  |
+| Boost C++ Libraries   | 1.72.0  |
+
+### Packages
+
+| Package               | Version |
+| --------------------- | --------- |
+| autoconf              | 2.69 |
+| automake              | 1:1.15 |
+| bash                  | 4.4 |
+| bash-completion       | 1:2.1 |
+| binutils              | 2.28 |
+| bison                 | 2:3.0.4 |
+| checkinstall          | 1.6.2 |
+| cpp                   | 4:6.3.0 |
+| cpp-6                 | 6.3.0 |
+| curl                  | 7.52.1 |
+| diffutils             | 1:3.5 |
+| file                  | 1:5.30 |
+| flex                  | 2.6.1 |
+| g++                   | 4:6.3.0 |
+| g++-6                 | 6.3.0 |
+| gcc                   | 4:6.3.0 |
+| gcc-6                 | 6.3.0 |
+| gdb                   | 7.12 |
+| git                   | 1:2.11.0 |
+| gpgv                  | 2.1.18 |
+| gzip                  | 1.6 |
+| iputils-ping          | 3 |
+| less                  | 481 |
+| libasan3              | 6.3.0 |
+| libc                  | 2.24 |
+| libfreetype6          | 2.6.3 |
+| libgcc                | 6.3.0 |
+| libgcc                | 1:6.3.0 |
+| libglib               | 2.50.3 |
+| libgmp                | 2:6.1.2 |
+| libjsoncpp            | 1.7.4-3 |
+| liblz4-tool           | 0.0~r131 |
+| liblzma5              | 5.2.2 |
+| libncurses5           | 6.0 |
+| libpng                | 1.6.28 |
+| libssl                | 1.1.0l |
+| libtcmalloc           | 2.5-2.2 |
+| libtool               | 2.4.6 |
+| libubsan              | 6.3.0 |
+| libusb                | 2:0.1.12 |
+| locales               | 2.24 |
+| m4                    | 1.4.18 |
+| make                  | 4.1 |
+| nano                  | 2.7.4 |
+| nasm                  | 2.12.01 |
+| p7zip                 | 16.02 |
+| patch                 | 2.7.5 |
+| python3.5-minimal     | 3.5.3 |
+| sshpass               | 1.06 |
+| tree                  | 1.7.0 |
+| unzip                 | 6.0 |
+| wget                  | 1.18 |
+| xz-utils              | 5.2.2 |
 
 ## Reporting Issues
 
