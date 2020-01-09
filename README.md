@@ -1,4 +1,4 @@
-# ARMv7 C/C++ Toolchain for MiSTer FPGA
+# ARMv7 C/C++ Toolchain for the MiSTer FPGA (DE10-Nano)
 
 This (hopefully) gives you a frictionless development environment with everything you need to compile
 code written in **C/C++** targeting the **MiSTer** (DE10-Nano) or any other device with an ARMv7 architecture
