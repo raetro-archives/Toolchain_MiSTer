@@ -1,6 +1,6 @@
 # ARMv7 C/C++ Toolchain for MiSTer FPGA
 
-This (hopefully) gives you a frictionless development environment with everything you need to compile code written in **C/C++** for **MiSTer** (DE10-Nano) or any other device with an ARMv7 architecture using Docker to natively compile having to deal with cross-compilation.
+This (hopefully) gives you a frictionless development environment with everything you need to compile code written in **C/C++** for **MiSTer** (DE10-Nano) or any other device with an ARMv7 architecture using Docker to natively compile without having to deal with cross-compilation.
 Some additional packages are installed to satisfy build requirements. This image compressed comes to **271.48 MB**, but with its base layers the total on disk is **1.1GB**.
 
 ## Terasic DE10-Nano <abbr title="Hard Processor System">HPS</abbr> Information
