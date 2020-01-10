@@ -253,7 +253,9 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | g++                   | 6.3.0 |
 | gcc                   | 6.3.0 |
 | gdb                   | 7.12 |
+| gettext               | 0.19.8 |
 | git                   | 2.11.0 |
+| glib                  | 2.56.4 |
 | gpgv                  | 2.1.18 |
 | gzip                  | 1.6 |
 | iputils-ping          | 3 |
