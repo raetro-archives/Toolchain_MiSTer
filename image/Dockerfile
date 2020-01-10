@@ -125,6 +125,9 @@ ENV BOOST_VERSION="1.72.0"
 ENV BOOST_VERSION_="1_72_0"
 RUN wget -qO- https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_}.tar.gz | tar --strip-components=1 -xz -C ${BOOST_ROOT}
 
+# Fix some core dependencies without rebuilding all layers
+RUN apt-get update && apt-get upgrade -y && apt-get install -y gettext libglib2.0-dev --no-install-recommends && rm -r /var/lib/apt/lists/
+
 # Set Volume and Workdir
 VOLUME /mister
 WORKDIR /mister
