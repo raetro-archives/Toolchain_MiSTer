@@ -128,7 +128,7 @@ RUN wget -qO- https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/bo
 # Fix some core dependencies without rebuilding all layers
 RUN apt-get update && apt-get upgrade -y && \
 	apt-get install -y gettext libglib2.0-dev \
-	libltdl-dev autopoint \
+	libltdl-dev autopoint libudev-dev udev\
 	--no-install-recommends && \
 	rm -r /var/lib/apt/lists/*
 
