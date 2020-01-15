@@ -129,7 +129,7 @@ RUN wget -qO- https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/bo
 RUN apt-get update && apt-get upgrade -y && \
 	apt-get install -y gettext libglib2.0-dev \
 	libltdl-dev autopoint libudev-dev udev \
-	libdbus-1-dev libdbus-glib-1-dev \
+	libdbus-1-dev libdbus-glib-1-dev intltool \
 	--no-install-recommends && \
 	rm -r /var/lib/apt/lists/*
 

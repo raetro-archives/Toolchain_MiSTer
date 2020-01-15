@@ -279,10 +279,13 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | glib                  | 2.56.4 |
 | gpgv                  | 2.1.18 |
 | gzip                  | 1.6 |
+| intltool              | 0.51.0 |
 | iputils-ping          | 3 |
 | less                  | 481 |
 | libasan3              | 6.3.0 |
 | libc                  | 2.24 |
+| libdbus               | 1.10.28 |
+| libdbus-glib          | 0.108 |
 | libfreetype6          | 2.6.3 |
 | libgcc                | 6.3.0 |
 | libgcc                | 6.3.0 |
@@ -310,6 +313,7 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | sshpass               | 1.06 |
 | tree                  | 1.7.0 |
 | unzip                 | 6.0 |
+| udev                 | 232-25 |
 | wget                  | 1.18 |
 | xz-utils              | 5.2.2 |
 
