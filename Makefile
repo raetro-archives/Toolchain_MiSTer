@@ -1,5 +1,5 @@
 NAME = misterkun/toolchain
-VERSION = 0.2.1
+VERSION = 0.2.2
 BUILD_DATE = `date -u +"%Y-%m-%dT%H:%M:%SZ"`
 VCS_REF = `git rev-parse --short HEAD`
 

@@ -32,12 +32,32 @@ exec user process caused "exec format error"
 
 Which means that the image tried to start a binary/executable which can’t be run on the current platform.
 
-For that we need to run the **magic** command to enable **Arm** and **Arm64** containers to work
+For that we need to run the **magic** command to enable **Arm** and **Arm64** containers to work natively.
 
 ```bash
 docker run --rm --privileged hypriot/qemu-register
 ```
 
+Sample Output:
+
+```shell script
+Registered interpreter=qemu-aarch64
+enabled
+interpreter /qemu-aarch64
+flags: OCF
+offset 0
+magic 7f454c460201010000000000000000000200b700
+mask ffffffffffffff00fffffffffffffffffeffffff
+---
+Registered interpreter=qemu-arm
+enabled
+interpreter /qemu-arm
+flags: OCF
+offset 0
+magic 7f454c4601010100000000000000000002002800
+mask ffffffffffffff00fffffffffffffffffeffffff
+---
+```
 ![Shia Labeouf Magic](https://media.giphy.com/media/12NUbkX6p4xOO4/giphy.gif)
 
 BOOM! And just like that a few Qemu emulators will be registered and instruct the loader to start the specific emulator to run the binary/executable if you try to run an Arm based container.
@@ -240,6 +260,7 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | --------------------- | --------- |
 | autoconf              | 2.69 |
 | automake              | 1.15 |
+| autopoint             | 0.19.8 |
 | bash                  | 4.4 |
 | bash-completion       | 2.1 |
 | binutils              | 2.28 |
@@ -275,6 +296,7 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | libssl                | 1.1.0l |
 | libtcmalloc           | 2.5-2.2 |
 | libtool               | 2.4.6 |
+| libltdl               | 2.4.6 |
 | libubsan              | 6.3.0 |
 | libusb                | 0.1.12 |
 | locales               | 2.24 |
