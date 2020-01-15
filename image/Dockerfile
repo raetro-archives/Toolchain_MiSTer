@@ -135,6 +135,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # Add CXXFLAGS
 ENV CXXFLAGS="-mcpu=cortex-a9 -mtune=cortex-a9 -mfloat-abi=hard -march=armv7-a -mfpu=neon"
+ENV MAKEFLAGS="-j$(nproc)"
 
 # Set Volume and Workdir
 VOLUME /mister
