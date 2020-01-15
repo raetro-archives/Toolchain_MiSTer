@@ -128,9 +128,13 @@ RUN wget -qO- https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/bo
 # Fix some core dependencies without rebuilding all layers
 RUN apt-get update && apt-get upgrade -y && \
 	apt-get install -y gettext libglib2.0-dev \
-	libltdl-dev autopoint libudev-dev udev\
+	libltdl-dev autopoint libudev-dev udev \
+	libdbus-1-dev libdbus-glib-1-dev \
 	--no-install-recommends && \
 	rm -r /var/lib/apt/lists/*
+
+# Add CXXFLAGS
+ENV CXXFLAGS="-mcpu=cortex-a9 -mtune=cortex-a9 -mfloat-abi=hard -march=armv7-a -mfpu=neon"
 
 # Set Volume and Workdir
 VOLUME /mister
