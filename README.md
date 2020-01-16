@@ -259,6 +259,7 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | Package               | Version |
 | --------------------- | --------- |
 | autoconf              | 2.69 |
+| autogen               | 5.18.12 |
 | automake              | 1.15 |
 | autopoint             | 0.19.8 |
 | bash                  | 4.4 |
@@ -311,9 +312,10 @@ developer@misterkun:/home/developer/projects/Main_MiSTer/# mtc make
 | patch                 | 2.7.5 |
 | python3.5-minimal     | 3.5.3 |
 | sshpass               | 1.06 |
+| shtool                | 2.0.8 |
 | tree                  | 1.7.0 |
 | unzip                 | 6.0 |
-| udev                 | 232-25 |
+| udev                  | 232-25 |
 | wget                  | 1.18 |
 | xz-utils              | 5.2.2 |
 
